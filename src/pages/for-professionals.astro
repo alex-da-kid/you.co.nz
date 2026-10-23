@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CTA from '../components/CTA.astro';
+import listening from '../assets/photos/lyncia-listening.jpg';
+
+const options = [
+  { title: 'A series of coaching sessions', text: 'Work through a specific challenge: stepping into a bigger role, managing people for the first time, or getting clear on where you want your career to go.', href: '/coaching' },
+  { title: 'A strengths assessment and debrief', text: 'Find out what comes naturally to you and how to use it. It\'s a great foundation for any other development, and useful for the rest of your career.', href: '/strengths' },
+  { title: 'A communication workshop', text: 'Practical, transferable skills: listening, raising difficult issues, and helping others solve problems. You\'ll use them every day.', href: '/workshops' },
+];
+---
+
+<BaseLayout
+  title="Using Your Professional Development Budget on Coaching"
+  description="Your employer has offered to fund your professional development. Here's how coaching, Gallup CliftonStrengths or a communication workshop with YOU Coaching can be a worthwhile use of it."
+>
+  <PageHero
+    eyebrow="For professionals"
+    title="Got a professional development budget? Make it count."
+    lead="Many employers set aside money for each person's development and leave it to you to choose. Rather than another conference you'll forget by next month, invest in skills and self-understanding you'll use for the rest of your career."
+    image={listening}
+    imageAlt="Lyncia in a one-to-one coaching session"
+  />
+
+  <section class="py-16 sm:py-20">
+    <div class="container-page">
+      <h2 class="text-3xl sm:text-4xl">Options that work well with a PD budget</h2>
+      <div class="mt-10 grid gap-6 lg:grid-cols-3">
+        {options.map((o) => (
+          <a href={o.href} class="group flex flex-col rounded-3xl border border-navy/10 bg-white p-7 no-underline shadow-sm transition hover:shadow-md">
+            <h3 class="text-xl group-hover:text-teal-deep">{o.title}</h3>
+            <p class="mt-3 flex-1 text-muted">{o.text}</p>
+            <span class="mt-5 font-display text-teal-deep">Find out more →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-mint-soft py-16 sm:py-20">
+    <div class="container-page grid gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-3xl sm:text-4xl">How to ask your employer</h2>
+        <ol class="mt-6 list-decimal space-y-4 pl-5 text-lg text-muted marker:font-display marker:text-teal-deep">
+          <li>Book a free initial chat with me first, so you know what you'd be asking for and roughly what it costs.</li>
+          <li>Be specific about what you want to get better at, and how it will help in your role.</li>
+          <li>Send your manager a short note. Feel free to adapt the example.</li>
+        </ol>
+        <p class="mt-6 text-muted">
+          {/* TODO(Lyncia): confirm she's happy to invoice employers directly. */}
+          I'm happy to invoice your employer directly, and everything we talk about stays confidential.
+        </p>
+      </div>
+      <figure class="rounded-3xl bg-white p-7 shadow-sm sm:p-9">
+        <figcaption class="eyebrow">Example email</figcaption>
+        <div class="mt-4 space-y-3 text-ink">
+          <p>Hi [manager],</p>
+          <p>
+            I'd like to use part of my professional development budget this year on [coaching / a strengths assessment / a
+            communication workshop] with Lyncia Podmore at YOU Coaching.
+          </p>
+          <p>
+            I want to get better at [e.g. leading my team / handling difficult client conversations], and I think this would
+            make a real difference to [how it helps the team or clients].
+          </p>
+          <p>The cost would be [amount]. More information is at you.co.nz. Happy to talk it through.</p>
+          <p>Thanks, [your name]</p>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <CTA heading="Not sure which option fits?" text="Book a free initial chat. We'll work out what would be most useful for you, and I'll give you everything you need to put to your employer." />
+</BaseLayout>

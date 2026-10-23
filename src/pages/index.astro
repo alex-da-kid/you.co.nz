@@ -1,0 +1,200 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CTA from '../components/CTA.astro';
+import { services } from '../data/services';
+import portrait from '../assets/photos/lyncia-portrait.jpg';
+import presenting from '../assets/photos/lyncia-presenting.jpg';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const audiences = [
+  {
+    title: 'For you',
+    text: "You feel stuck, you're facing a change, or you keep running into the same problem and can't see why. One-to-one coaching gives you time to think it through properly.",
+    href: '/coaching',
+    cta: 'About coaching',
+  },
+  {
+    title: 'For your team',
+    text: 'Help people understand each other, communicate clearly and play to their strengths. Strengths sessions and communication workshops shaped around what your team actually needs.',
+    href: '/for-organisations',
+    cta: 'For organisations',
+  },
+  {
+    title: 'Using a PD budget',
+    text: "Your employer has offered to fund your professional development and you're wondering what's worth it. Here's how coaching and workshops can fit.",
+    href: '/for-professionals',
+    cta: 'Using your PD budget',
+  },
+];
+
+const steps = [
+  { n: '1', title: 'A free chat', text: "No obligation, by phone or video. You tell me what's going on; I'll tell you honestly whether I can help." },
+  { n: '2', title: 'We agree what you need', text: 'A few coaching sessions, a strengths debrief, or a workshop for your team. Nothing off the shelf unless it fits.' },
+  { n: '3', title: 'We get to work', text: 'Mostly that means you talking and me listening, then helping you notice the patterns and decide what to do next.' },
+];
+---
+
+<BaseLayout
+  title="Coaching, Gallup Strengths & Communication Workshops in Wellington | YOU Coaching"
+  description="Calm, strengths-based coaching and communication workshops with Lyncia Podmore. Helping individuals, leaders and teams in Wellington and online build confidence and work better together."
+>
+  <!-- Hero -->
+  <section class="overflow-hidden bg-gradient-to-b from-mint-soft to-cream">
+    <div class="container-page grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.25fr_1fr] lg:py-24">
+      <div>
+        <p class="eyebrow">Coaching · Strengths · Communication</p>
+        <h1 class="mt-4 text-5xl font-medium leading-[1.05] sm:text-6xl lg:text-7xl">
+          There's nothing wrong with you.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg text-muted sm:text-xl">
+          Most of us aren't broken. Sometimes things just aren't going the way we'd like. I help people and teams understand
+          what comes naturally to them, communicate better, and find the confidence to take the next step.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="btn-primary">Book a free initial chat</a>
+          <a href="/for-organisations" class="btn-secondary">Working with teams</a>
+        </div>
+        <p class="mt-6 text-sm text-muted">Lyncia Podmore · Wellington-based, working in person and online</p>
+      </div>
+      <div class="relative mx-auto w-full max-w-md">
+        <div class="absolute -right-6 -top-6 size-40 rounded-full bg-mint" aria-hidden="true"></div>
+        <div class="absolute -bottom-8 -left-8 size-28 rounded-full border-[10px] border-teal/40" aria-hidden="true"></div>
+        <Image
+          src={portrait}
+          alt="Lyncia Podmore smiling in a garden"
+          widths={[400, 600, 800]}
+          sizes="(min-width: 1024px) 448px, 90vw"
+          class="relative aspect-[4/5] w-full rounded-[2rem] object-cover shadow-xl"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="py-16 sm:py-20">
+    <div class="container-page">
+      <p class="eyebrow">Where would you like to start?</p>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {audiences.map((a) => (
+          <a href={a.href} class="group flex flex-col rounded-3xl border border-navy/10 bg-white p-7 no-underline shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+            <h2 class="text-2xl">{a.title}</h2>
+            <p class="mt-3 flex-1 text-muted">{a.text}</p>
+            <span class="mt-6 font-display text-teal-deep">{a.cta} <span aria-hidden="true" class="inline-block transition group-hover:translate-x-1">→</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="bg-navy py-16 text-white sm:py-24">
+    <div class="container-page grid gap-12 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow text-mint">A calmer approach</p>
+        <h2 class="mt-4 text-4xl text-white sm:text-5xl">Not about being extraordinary. About being more fully you.</h2>
+      </div>
+      <div class="space-y-5 text-lg text-white/80">
+        <p>
+          You won't find any "live your extraordinary life" promises here. Most of us won't lead extraordinary lives, and
+          that's fine. What nearly all of us can have is a life that's happy and fulfilling, with good relationships at
+          work and at home.
+        </p>
+        <p>
+          My work starts from what's already right with you. When you understand what comes naturally to you, you stop
+          trying to be someone else, and confidence follows. The biggest waste I see isn't laziness. It's people who never
+          get to use what they're good at, because nobody ever pointed it out.
+        </p>
+        <p class="font-display text-xl text-white">"Learn to want what you already have", and build from there.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="py-16 sm:py-24">
+    <div class="container-page">
+      <div class="max-w-2xl">
+        <p class="eyebrow">How I can help</p>
+        <h2 class="mt-3 text-4xl">Strengths, communication, and the confidence underneath both</h2>
+      </div>
+      <div class="mt-12 grid gap-6 lg:grid-cols-3">
+        {services.map((s) => (
+          <article class="flex flex-col rounded-3xl bg-white p-8 shadow-sm ring-1 ring-navy/10">
+            <p class="eyebrow">{s.pillar}</p>
+            <h3 class="mt-3 text-2xl">{s.title}</h3>
+            <p class="mt-3 flex-1 text-muted">{s.summary}</p>
+            <p class="mt-5 text-sm text-ink">{s.format}</p>
+            {s.price && <p class="mt-1 text-sm font-medium text-navy">{s.price}</p>}
+            <a href={s.href} class="btn-secondary mt-6 self-start">Learn more</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="bg-mint-soft py-16 sm:py-20">
+    <div class="container-page">
+      <h2 class="text-3xl sm:text-4xl">How it works</h2>
+      <ol class="mt-10 grid gap-8 md:grid-cols-3">
+        {steps.map((s) => (
+          <li>
+            <span class="flex size-12 items-center justify-center rounded-full bg-navy font-display text-lg text-white">{s.n}</span>
+            <h3 class="mt-4 text-xl">{s.title}</h3>
+            <p class="mt-2 text-muted">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <!-- About teaser -->
+  <section class="py-16 sm:py-24">
+    <div class="container-page grid items-center gap-12 lg:grid-cols-2">
+      <Image src={presenting} alt="Lyncia presenting to a workshop group" widths={[500, 800]} sizes="(min-width: 1024px) 540px, 90vw" class="aspect-[4/3] w-full rounded-3xl object-cover" />
+      <div>
+        <p class="eyebrow">About Lyncia</p>
+        <h2 class="mt-3 text-4xl">A sounding board, not a cheerleader</h2>
+        <p class="mt-5 text-lg text-muted">
+          I became a coach after "career coaching" myself in 2007, and I still love it. I have a psychology degree, and I'm
+          a Gallup Certified Strengths Coach and an accredited Transforming Communication™ trainer.
+        </p>
+        <p class="mt-4 text-lg text-muted">
+          For some clients I'm a thinking partner on a big decision. For leaders, I'm often the person they can talk
+          things through with when there's nobody else to ask.
+        </p>
+        <a href="/about" class="btn-secondary mt-8">More about me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section class="border-t border-navy/10 py-16 sm:py-20">
+    <div class="container-page">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="text-3xl sm:text-4xl">Recent thinking</h2>
+        <a href="/blog" class="font-display">All articles →</a>
+      </div>
+      <div class="mt-10 grid gap-8 md:grid-cols-3">
+        {posts.map((p) => (
+          <a href={`/blog/${p.id}`} class="group no-underline">
+            {p.data.image && <Image src={p.data.image} alt={p.data.imageAlt} width={600} class="aspect-[3/2] w-full rounded-2xl object-cover" />}
+            <h3 class="mt-4 text-xl group-hover:text-teal-deep">{p.data.title}</h3>
+            <p class="mt-2 text-muted">{p.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>

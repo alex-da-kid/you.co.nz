@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+import { faqSchema, serviceSchema } from '../data/schema';
+import presenting from '../assets/photos/lyncia-presenting.jpg';
+
+const learn = [
+  'How to set the scene so important conversations go well',
+  'How to listen so people feel genuinely heard, and respond to what was actually said',
+  'How to help other people solve their own problems instead of solving them for them',
+  'How to raise your own concerns in a way that invites a solution, not a fight',
+  'What happens in the brain and body when communication goes wrong, and how to get it back on track',
+];
+
+const formats = [
+  { title: 'The full programme', text: 'Four days: two consecutive days, then two more a fortnight later. The gap gives people time to practise between blocks.' },
+  { title: 'Spread out', text: 'The same content in smaller pieces, for example across four weeks, so people aren\'t out of the workplace for days at a time.' },
+  { title: 'Tailored to your team', text: 'Tell me the problem you\'re trying to solve, and I\'ll build a session around the parts of the programme that will help most.' },
+];
+
+const faqs = [
+  { q: 'Who is Transforming Communication for?', a: 'Anyone whose work depends on relationships: managers, team leaders, client-facing staff, and teams that need to work better together. It\'s just as useful outside work.' },
+  { q: 'Are the workshops in person?', a: 'Mostly, yes. So much of work life is now remote and squeezed between other things. Being in the room with others, all focused on the same thing, makes it easier to fully engage. It also lets me adapt to the group as we go.' },
+  { q: 'Can you run a workshop just for our organisation?', a: 'Yes, and most of my workshops are run this way. We\'ll talk about what you need first, then agree the length, format and content.' },
+  { q: 'Do you run public workshops?', a: 'From time to time. Get in touch to register your interest and I\'ll let you know when the next one is scheduled.' },
+];
+
+const description = 'Communication skills workshops in Wellington with an accredited Transforming Communication trainer. Practical skills for teams and leaders, in a format that fits your workplace.';
+---
+
+<BaseLayout
+  title="Communication Skills Workshops for Teams, Wellington"
+  description={description}
+  schema={[serviceSchema('Transforming Communication workshop', description, '/workshops'), faqSchema(faqs)]}
+>
+  <PageHero
+    eyebrow="Communication workshops"
+    title="Talking isn't the same as communicating"
+    lead="Good communication means you get what you need and keep your relationships intact. It's a skill like any other, and it can be learned. My workshops give people the understanding and practice to do it well."
+    image={presenting}
+    imageAlt="Lyncia presenting to a workshop audience"
+  >
+    <Fragment slot="actions">
+      <a href="/contact" class="btn-primary">Enquire about a workshop</a>
+      <a href="/strengths" class="btn-secondary">Strengths workshops</a>
+    </Fragment>
+  </PageHero>
+
+  <section class="py-16 sm:py-20">
+    <div class="container-page grid gap-12 lg:grid-cols-[1.3fr_1fr]">
+      <div>
+        <p class="eyebrow">Flagship programme</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Transforming Communication™</h2>
+        <div class="mt-6 space-y-4 text-lg text-muted">
+          <p>
+            I love this programme. I didn't write it; it's the work of Dr Richard Bolstad, and I'm an accredited trainer.
+            When I first came across it during another training, I immediately wanted to spread the word.
+          </p>
+          <p>
+            It teaches the mechanics of communication: why messages get muddled between one person's mouth and another
+            person's ears, and what to do about it. It will help you in every part of your life, not just at work.
+          </p>
+        </div>
+      </div>
+      <div class="self-start rounded-3xl bg-white p-8 ring-1 ring-navy/10">
+        <h3 class="text-xl">You'll learn</h3>
+        <ul class="mt-5 space-y-3">
+          {learn.map((l) => (
+            <li class="flex gap-3 text-muted">
+              <svg class="mt-1.5 size-4 shrink-0 text-teal" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2.5" /></svg>
+              <span>{l}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-mint-soft py-16 sm:py-20">
+    <div class="container-page">
+      <h2 class="text-3xl sm:text-4xl">A format that fits your workplace</h2>
+      <p class="mt-4 max-w-2xl text-lg text-muted">
+        Four days out of the office is a big ask for some teams. The content is flexible, so we can shape it around
+        your people and the problem you're trying to solve.
+      </p>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {formats.map((f) => (
+          <div class="rounded-3xl bg-white p-7 shadow-sm">
+            <h3 class="text-xl">{f.title}</h3>
+            <p class="mt-3 text-muted">{f.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="container-page grid gap-8 md:grid-cols-2">
+      <article class="rounded-3xl border border-navy/10 bg-white p-8 sm:p-10">
+        <h2 class="text-2xl sm:text-3xl">Gallup Strengths workshops</h2>
+        <p class="mt-4 text-muted">
+          Help your team understand what each person brings, what motivates them and how to support each other. Half a day,
+          a full day or longer, tailored to your team.
+        </p>
+        <a href="/strengths" class="btn-secondary mt-6">About strengths workshops</a>
+      </article>
+      <article class="rounded-3xl border border-navy/10 bg-white p-8 sm:p-10">
+        <h2 class="text-2xl sm:text-3xl">Something different?</h2>
+        <p class="mt-4 text-muted">
+          If you have a specific challenge in mind, I can design a workshop around it. Communication, strengths,
+          confidence, working together: I'll pick out the pieces that will make a difference for your people.
+        </p>
+        <a href="/contact" class="btn-secondary mt-6">Talk to me about it</a>
+      </article>
+    </div>
+  </section>
+
+  <FAQ items={faqs} />
+  <CTA heading="Let's design the right workshop" text="Book a free initial chat. Tell me about your team and what you'd like to change, and I'll suggest the right format and length." />
+</BaseLayout>

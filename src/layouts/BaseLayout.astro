@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import ogDefault from '../assets/photos/lyncia-portrait.jpg';
+import { getImage } from 'astro:assets';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Extra JSON-LD objects for this page (Service, FAQPage, Article…). */
+  schema?: Record<string, unknown>[];
+  ogImage?: ImageMetadata;
+  type?: 'website' | 'article';
+}
+
+const { title, description = site.description, schema = [], ogImage = ogDefault, type = 'website' } = Astro.props;
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: ogImage, width: 1200, format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site);
+
+const business = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site.url}/#business`,
+  name: site.name,
+  legalName: site.legalName,
+  url: site.url,
+  telephone: site.phone,
+  description: site.description,
+  image: ogUrl.href,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    postalCode: site.address.postcode,
+    addressCountry: site.address.country,
+  },
+  areaServed: ['Wellington', 'New Zealand', 'Online'],
+  founder: {
+    '@type': 'Person',
+    name: site.owner,
+    jobTitle: 'Coach and facilitator',
+    sameAs: [site.social.linkedin],
+  },
+  sameAs: [site.social.facebook, site.social.linkedin],
+};
+---
+
+<!doctype html>
+<html lang="en-NZ">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} blog`} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#001948" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:locale" content="en_NZ" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify([business, ...schema])} />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2">Skip to content</a>
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

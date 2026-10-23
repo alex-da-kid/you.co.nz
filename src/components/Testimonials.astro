@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  service?: 'coaching' | 'strengths' | 'workshops';
+  heading?: string;
+}
+
+const { service, heading = 'What clients say' } = Astro.props;
+const all = await getCollection('testimonials');
+const items = service ? all.filter((t) => t.data.service === service) : all.filter((t) => t.data.featured);
+---
+
+{items.length > 0 && (
+  <section class="bg-sand/60 py-16 sm:py-20">
+    <div class="container-page">
+      <h2 class="text-3xl">{heading}</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {items.map((t) => (
+          <figure class="flex flex-col rounded-2xl bg-white p-7 shadow-sm">
+            <svg class="size-8 text-teal" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M10 8C5.6 8 3 11.4 3 15.6V24h8.4v-8.4H7.2c0-3 1.4-4.6 4-4.8V8zm15 0c-4.4 0-7 3.4-7 7.6V24h8.4v-8.4h-4.2c0-3 1.4-4.6 4-4.8V8z" /></svg>
+            <blockquote class="mt-4 flex-1 text-ink" set:html={t.rendered?.html} />
+            <figcaption class="mt-6 font-display text-sm text-muted">
+              {t.data.name && <span class="block text-navy">{t.data.name}</span>}
+              {t.data.role}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

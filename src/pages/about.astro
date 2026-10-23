@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Credentials from '../components/Credentials.astro';
+import CTA from '../components/CTA.astro';
+import { site } from '../data/site';
+import portrait from '../assets/photos/lyncia-portrait.jpg';
+import presenting from '../assets/photos/lyncia-presenting.jpg';
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.owner,
+  jobTitle: 'Coach and facilitator',
+  worksFor: { '@id': `${site.url}/#business` },
+  url: `${site.url}/about`,
+  sameAs: [site.social.linkedin],
+  knowsAbout: ['Coaching', 'Gallup CliftonStrengths', 'Communication skills', 'Leadership development', 'NLP'],
+};
+---
+
+<BaseLayout
+  title="About Lyncia Podmore, Coach & Facilitator, Wellington"
+  description="Lyncia Podmore is a Wellington-based coach, Gallup Certified Strengths Coach and accredited Transforming Communication trainer. Calm, grounded coaching with no hype."
+  schema={[person]}
+>
+  <section class="bg-gradient-to-b from-mint-soft to-cream">
+    <div class="container-page grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1fr_1.2fr]">
+      <Image src={portrait} alt="Lyncia Podmore" widths={[400, 700]} sizes="(min-width: 1024px) 460px, 90vw" class="mx-auto aspect-[4/5] w-full max-w-md rounded-[2rem] object-cover shadow-xl" loading="eager" />
+      <div>
+        <p class="eyebrow">About</p>
+        <h1 class="mt-3 text-4xl font-medium sm:text-5xl">Hi, I'm Lyncia</h1>
+        <div class="mt-6 space-y-4 text-lg text-muted">
+          <p>
+            I decided to become a coach after "career coaching" myself in 2007. It proved to be the right decision. I love
+            what I do. Every day, and every conversation, brings something different.
+          </p>
+          <p>
+            I'm based in Wellington, with an office in the central city. Technology means I work with people all over New
+            Zealand and further afield too.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="container-page max-w-3xl">
+      <h2 class="text-3xl sm:text-4xl">What I believe</h2>
+      <div class="mt-6 space-y-5 text-lg text-muted">
+        <p>
+          I'm not interested in the rah-rah side of coaching: the "be the best, lead your extraordinary life" stuff. I
+          think a lot of the self-help industry is quite selfish, and it isn't always good for us. It can make us more
+          inward-looking, not less.
+        </p>
+        <p>
+          Most of us won't lead extraordinary lives. But nearly everyone can lead a happy and fulfilling one, where you get
+          to do things you enjoy, you have good relationships, and you're using what you're good at. We're not islands. Our
+          lives are tied up with the people around us, and a good life is one that the people we care about are happy to
+          be part of too.
+        </p>
+        <p>
+          And I genuinely believe there's nothing wrong with most of us. Things just don't go right sometimes. If we can
+          find out why, there's usually something we can do about it. You can learn to communicate better, to listen
+          better, to present yourself well. What you can't do is become someone else, and you don't need to.
+        </p>
+        <blockquote class="border-l-4 border-teal pl-5 font-display text-xl text-navy">
+          "Learn to want what you already have." Let's look at what you've already got, and build on that.
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-mint-soft py-16 sm:py-20">
+    <div class="container-page grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-3xl sm:text-4xl">Sounding board, thinking partner, listening post</h2>
+        <p class="mt-5 text-lg text-muted">
+          For some people I'm a coach working towards a specific goal. For others, especially leaders, I'm a trusted
+          listening post: someone to talk things over with, who will ask "How do you think that will land with Mary?" or
+          "What do you know about her that makes that a good idea?"
+        </p>
+        <p class="mt-4 text-lg text-muted">
+          Underneath everything I do are three things: <strong class="text-navy">strengths</strong>,
+          <strong class="text-navy">communication</strong>, and the <strong class="text-navy">confidence</strong> that
+          grows when you understand both.
+        </p>
+      </div>
+      <Image src={presenting} alt="Lyncia presenting at a workshop" widths={[500, 800]} sizes="(min-width: 1024px) 540px, 90vw" class="aspect-[4/3] w-full rounded-3xl object-cover" />
+    </div>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <div class="container-page max-w-4xl">
+      <Credentials />
+    </div>
+  </section>
+
+  <CTA />
+</BaseLayout>

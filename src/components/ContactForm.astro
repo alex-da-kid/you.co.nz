@@ -1,0 +1,77 @@
+---
+// Posts to Web3Forms (free), which emails each submission to Lyncia.
+// Set PUBLIC_WEB3FORMS_KEY in .env locally and in the Cloudflare Pages settings.
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+
+interface Props {
+  subject?: string;
+}
+const { subject = 'New enquiry from you.co.nz' } = Astro.props;
+
+const field = 'mt-1.5 w-full rounded-xl border border-navy/20 bg-white px-4 py-3 text-ink placeholder:text-muted/60 focus:border-teal-deep focus:outline-none focus:ring-2 focus:ring-teal/30';
+---
+
+<form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="grid gap-5 sm:grid-cols-2">
+  <input type="hidden" name="access_key" value={accessKey} />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value="you.co.nz website" />
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+  <label class="block">
+    <span class="font-display text-sm text-navy">Name *</span>
+    <input class={field} type="text" name="name" required autocomplete="name" />
+  </label>
+  <label class="block">
+    <span class="font-display text-sm text-navy">Email *</span>
+    <input class={field} type="email" name="email" required autocomplete="email" />
+  </label>
+  <label class="block">
+    <span class="font-display text-sm text-navy">Phone</span>
+    <input class={field} type="tel" name="phone" autocomplete="tel" />
+  </label>
+  <label class="block">
+    <span class="font-display text-sm text-navy">I'm interested in</span>
+    <select class={field} name="interest">
+      <option>One-to-one coaching</option>
+      <option>Gallup CliftonStrengths</option>
+      <option>Communication workshops</option>
+      <option>Something for my team or organisation</option>
+      <option>Not sure yet</option>
+    </select>
+  </label>
+  <label class="block sm:col-span-2">
+    <span class="font-display text-sm text-navy">Message *</span>
+    <textarea class={field} name="message" rows="5" required placeholder="A little about what's going on, or what you'd like help with."></textarea>
+  </label>
+  <div class="sm:col-span-2">
+    <button type="submit" class="btn-primary">Send message</button>
+    <p id="form-status" class="mt-4 text-sm" role="status" aria-live="polite"></p>
+  </div>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  const status = document.querySelector<HTMLParagraphElement>('#form-status');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!status) return;
+    const button = form.querySelector('button');
+    button?.setAttribute('disabled', '');
+    status.textContent = 'Sending…';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.message);
+      form.reset();
+      status.textContent = "Thanks, your message has been sent. Lyncia will be in touch soon.";
+    } catch {
+      status.textContent = 'Sorry, something went wrong. Please call or try again in a moment.';
+    } finally {
+      button?.removeAttribute('disabled');
+    }
+  });
+</script>

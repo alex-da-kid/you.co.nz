@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CTA from '../../components/CTA.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post, posts } }));
+}
+
+const { post, posts } = Astro.props;
+const { Content } = await render(post);
+const fmt = new Intl.DateTimeFormat('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' });
+const related = posts.filter((p) => p.id !== post.id).slice(0, 2);
+
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  author: { '@type': 'Person', name: site.owner, url: `${site.url}/about` },
+  publisher: { '@id': `${site.url}/#business` },
+  mainEntityOfPage: `${site.url}/blog/${post.id}`,
+};
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} ogImage={post.data.image} type="article" schema={[article]}>
+  <article class="py-14 sm:py-20">
+    <header class="container-page max-w-3xl">
+      <a href="/blog" class="font-display text-sm">← All articles</a>
+      <h1 class="mt-6 text-4xl font-medium sm:text-5xl">{post.data.title}</h1>
+      <p class="mt-4 text-muted">
+        By <a href="/about">{site.owner}</a> ·
+        <time datetime={post.data.pubDate.toISOString()}>{fmt.format(post.data.pubDate)}</time>
+      </p>
+    </header>
+    {post.data.image && (
+      <div class="container-page mt-10 max-w-4xl">
+        <Image src={post.data.image} alt={post.data.imageAlt} widths={[600, 900, 1200]} sizes="(min-width: 1024px) 896px, 100vw" class="aspect-[2/1] w-full rounded-3xl object-cover" loading="eager" />
+      </div>
+    )}
+    <div class="container-page mt-10 max-w-3xl">
+      <div class="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-medium prose-headings:text-navy prose-a:text-teal-deep prose-blockquote:border-teal prose-blockquote:font-normal prose-blockquote:not-italic">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="border-t border-navy/10 py-14">
+      <div class="container-page max-w-4xl">
+        <h2 class="text-2xl">Keep reading</h2>
+        <div class="mt-8 grid gap-8 sm:grid-cols-2">
+          {related.map((p) => (
+            <a href={`/blog/${p.id}`} class="group no-underline">
+              <h3 class="text-xl group-hover:text-teal-deep">{p.data.title}</h3>
+              <p class="mt-2 text-muted">{p.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CTA />
+</BaseLayout>

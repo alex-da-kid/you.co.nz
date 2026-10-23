@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Private source material: never publish
+Alex's Meeting Notes_otter_ai/
+content-archive/
