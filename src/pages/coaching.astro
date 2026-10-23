@@ -6,6 +6,7 @@ import FAQ from '../components/FAQ.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CTA from '../components/CTA.astro';
 import { services } from '../data/services';
+import { site } from '../data/site';
 import { faqSchema, serviceSchema } from '../data/schema';
 import listening from '../assets/photos/lyncia-listening.jpg';
 import portrait from '../assets/photos/lyncia-portrait.jpg';
@@ -113,7 +114,7 @@ const description = 'One-to-one coaching in Wellington and online with Lyncia Po
           <div><dt class="font-display text-white">Session length</dt><dd>60 minutes</dd></div>
           <div><dt class="font-display text-white">Investment</dt><dd>{service.price ?? "Let's talk about it in your free initial chat"}</dd></div>
         </dl>
-        <a href="/contact" class="btn-light mt-7 w-full">Book a free initial chat</a>
+        <a href={site.calendly} target="_blank" rel="noopener" class="btn-light mt-7 w-full">Book a free initial chat</a>
       </aside>
     </div>
   </section>

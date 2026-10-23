@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CTA from '../components/CTA.astro';
 import { services } from '../data/services';
+import { site } from '../data/site';
 import portrait from '../assets/photos/lyncia-portrait.jpg';
 import presenting from '../assets/photos/lyncia-presenting.jpg';
 
@@ -57,7 +58,7 @@ const steps = [
           what comes naturally to them, communicate better, and find the confidence to take the next step.
         </p>
         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="/contact" class="btn-primary">Book a free initial chat</a>
+          <a href={site.calendly} target="_blank" rel="noopener" class="btn-primary">Book a free initial chat</a>
           <a href="/for-organisations" class="btn-secondary">Working with teams</a>
         </div>
         <p class="mt-6 text-sm text-muted">Lyncia Podmore · Wellington-based, working in person and online</p>

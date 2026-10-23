@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
-import { nav } from '../data/site';
+import { nav, site } from '../data/site';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
@@ -33,7 +33,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href="/contact" class="btn-primary hidden px-5 py-2.5 text-sm sm:inline-flex">Book a free chat</a>
+      <a href={site.calendly} target="_blank" rel="noopener" class="btn-primary hidden px-5 py-2.5 text-sm sm:inline-flex">Book a free chat</a>
       <details class="group relative lg:hidden">
         <summary class="flex size-11 cursor-pointer list-none items-center justify-center rounded-full border border-navy/20 text-navy [&::-webkit-details-marker]:hidden" aria-label="Menu">
           <svg class="size-5 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
@@ -47,7 +47,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
               </li>
             ))}
             <li class="mt-2 border-t border-navy/10 pt-3">
-              <a href="/contact" class="btn-primary w-full">Book a free chat</a>
+              <a href={site.calendly} target="_blank" rel="noopener" class="btn-primary w-full">Book a free chat</a>
             </li>
           </ul>
         </nav>

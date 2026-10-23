@@ -1,4 +1,6 @@
 ---
+import { site } from '../data/site';
+
 interface Props {
   heading?: string;
   text?: string;
@@ -10,7 +12,7 @@ const {
   heading = 'Start with a conversation',
   text = "Book a free initial chat. No pressure and no sales pitch. We'll talk about what's going on and whether I'm the right person to help.",
   primaryLabel = 'Book a free chat',
-  primaryHref = '/contact',
+  primaryHref = site.calendly,
 } = Astro.props;
 ---
 
@@ -20,7 +22,7 @@ const {
       <h2 class="text-3xl text-white sm:text-4xl">{heading}</h2>
       <p class="mx-auto mt-4 max-w-2xl text-lg text-white/80">{text}</p>
       <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-        <a href={primaryHref} class="btn-light">{primaryLabel}</a>
+        <a href={primaryHref} class="btn-light" {...(primaryHref.startsWith('http') && { target: '_blank', rel: 'noopener' })}>{primaryLabel}</a>
         <a href="/contact#message" class="btn border border-white/30 text-white hover:bg-white/10">Send a message</a>
       </div>
     </div>
