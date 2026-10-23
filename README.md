@@ -44,10 +44,10 @@ Search the code for `TODO(Lyncia)`.
 
 1. **Find out what Superstar Websites controls:** the domain, DNS, and email. The hosting may already have lapsed.
 2. **Email:** set up the @you.co.nz mailbox elsewhere (Zoho Mail free, or Google Workspace) and migrate her old mail.
-3. **Domain:** get the transfer code and move the registration to an account in Lyncia's name. Add the domain to Cloudflare and copy across all DNS records, especially the MX records.
-4. **Hosting:** push this repo to GitHub, then create a Cloudflare Pages project with build command `npm run build`, output `dist`, and env var `PUBLIC_WEB3FORMS_KEY`. Check the `*.pages.dev` preview.
-5. Point `www.you.co.nz` and `you.co.nz` at Cloudflare Pages, then test the site, email, the contact form, and the old URLs.
+3. **Domain:** get the transfer code and move the registration to an account in Lyncia's name. Keep every existing DNS record, especially the MX records that deliver her email.
+4. **Hosting:** the site is on Netlify, connected to this GitHub repo. Build settings are in `netlify.toml`, and every push to `main` redeploys automatically. Set the env var `PUBLIC_WEB3FORMS_KEY` in the Netlify site settings, then check the `*.netlify.app` preview.
+5. In Netlify, go to **Domain management** and add `www.you.co.nz` as the primary domain, with `you.co.nz` redirecting to it. At the DNS provider, point the domains at Netlify. Netlify shows the exact records to add. Leave the MX records untouched. Then test the site, email, the contact form, and the old URLs.
 6. Only then cancel the old hosting.
 7. Afterwards: submit the sitemap in Google Search Console, and set up or update her Google Business Profile.
 
-Use Cloudflare Pages rather than Vercel: Vercel's free Hobby plan doesn't allow commercial sites.
+The site uses Netlify rather than Vercel because Vercel's free Hobby plan doesn't allow commercial sites.
