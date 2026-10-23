@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CalendlyEmbed from '../components/CalendlyEmbed.astro';
+import BookingCard from '../components/BookingCard.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { site } from '../data/site';
 ---
@@ -23,8 +23,7 @@ import { site } from '../data/site';
   <section class="pb-16">
     <div class="container-page grid gap-10 lg:grid-cols-[1.6fr_1fr]">
       <div>
-        <h2 class="sr-only">Book a time</h2>
-        <CalendlyEmbed />
+        <BookingCard />
       </div>
       <aside class="space-y-6">
         <div class="rounded-3xl bg-navy p-8 text-white">

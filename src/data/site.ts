@@ -34,6 +34,7 @@ export const nav = [
   { href: '/for-organisations', label: 'For organisations' },
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export const credentials = [
